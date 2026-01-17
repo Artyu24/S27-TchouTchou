@@ -1,0 +1,13 @@
+name: TchouTchou_Artyu
+version: '0.1'
+main: me.artyu.zipTrain.ZipTrain
+api-version: '1.21'
+authors: [ Artyu ]
+commands:
+  tchoutchou_lockteam:
+    description: Lock a team
+  tchoutchou_unlockteam:
+    description: Unlock a team
+  tchoutchou_spawntrain:
+    description: Spawn a non-collidable minecart train
+    usage: /spawntrain <pseudo> <x> <y> <z> <n/s/e/w>

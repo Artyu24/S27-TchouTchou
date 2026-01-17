@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tchoutchou_Artyu:jar">
+    <output-path>$PROJECT_DIR$/../../../Jeux/Dossier Minecraft/Serveur Local/SVLServ-1_21_11/plugins</output-path>
+    <root id="archive" name="ZipTrain.jar">
+      <element id="module-output" name="ZipTrain.main" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+    </root>
+  </artifact>
+</component>
