@@ -34,9 +34,9 @@ public class TeamFurnaceManager
 
     // 3 recettes (fuel + input -> rails)
     private static final List<Recipe> RECIPES = List.of(
-            new Recipe(Material.OAK_WOOD, Material.ANDESITE, List.of(Material.GRASS_BLOCK, Material.ANDESITE, Material.OAK_WOOD, Material.LIME_CONCRETE)),
-            new Recipe(Material.SPRUCE_WOOD, Material.CALCITE, List.of(Material.SNOW_BLOCK, Material.WHITE_CONCRETE_POWDER, Material.SPRUCE_WOOD, Material.CALCITE, Material.WHITE_WOOL, Material.STRIPPED_PALE_OAK_WOOD, Material.LIGHT_BLUE_CONCRETE)),
-            new Recipe(Material.STRIPPED_MANGROVE_WOOD, Material.BLACKSTONE, List.of(Material.CRIMSON_NYLIUM, Material.BLACKSTONE, Material.NETHER_BRICKS, Material.RED_CONCRETE, Material.RED_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS))
+            new Recipe(Material.OAK_WOOD, Material.ANDESITE, List.of(Material.GRASS_BLOCK, Material.ANDESITE, Material.OAK_WOOD, Material.LIME_CONCRETE), 2),
+            new Recipe(Material.SPRUCE_WOOD, Material.CALCITE, List.of(Material.SNOW_BLOCK, Material.WHITE_CONCRETE_POWDER, Material.SPRUCE_WOOD, Material.CALCITE, Material.WHITE_WOOL, Material.STRIPPED_PALE_OAK_WOOD, Material.LIGHT_BLUE_CONCRETE), 4),
+            new Recipe(Material.STRIPPED_MANGROVE_WOOD, Material.BLACKSTONE, List.of(Material.CRIMSON_NYLIUM, Material.BLACKSTONE, Material.NETHER_BRICKS, Material.RED_CONCRETE, Material.RED_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS), 4)
     );
 
     private static BukkitTask _task;
@@ -95,7 +95,7 @@ public class TeamFurnaceManager
             return;
         }
 
-        ItemStack out = makeRails(2, recipe._allowedBases); // adapte si ton Recipe a encore un seul Material
+        ItemStack out = makeRails(recipe._railNumber, recipe._allowedBases); // adapte si ton Recipe a encore un seul Material
         if (!canInsert(result, out))
         {
             // On “garde” la flèche à son état actuel (ou 0 si tu préfères)
@@ -251,15 +251,27 @@ public class TeamFurnaceManager
         }
 
         List<ItemStack> drops = new ArrayList<>();
-        for (ItemStack it : inv.getContents())
-        {
-            if (it == null || it.getType().isAir())
-                continue;
+        
+        // 1) Input
+        ItemStack input = inv.getSmelting();
+        if (input != null && !input.getType().isAir())
+            drops.add(input.clone());
 
-            drops.add(it.clone()); // garde exactement la même data
-        }
+        // 2) Fuel
+        ItemStack fuel = inv.getFuel();
+        if (fuel != null && !fuel.getType().isAir())
+            drops.add(fuel.clone());
 
-        inv.clear();
+        // 3) Result (output)
+        ItemStack result = inv.getResult();
+        if (result != null && !result.getType().isAir())
+            drops.add(result.clone());
+
+        // Nettoyage de l'inventaire
+        inv.setSmelting(null);
+        inv.setFuel(null);
+        inv.setResult(null);
+
         data._progress = 0;
         updateFurnaceView(inv, 0, COOK_TIME_TICKS, false);
 
@@ -295,12 +307,14 @@ public class TeamFurnaceManager
         private final Material _fuel;
         private final Material _input;
         private final List<Material> _allowedBases;
+        private final int _railNumber;
 
-        private Recipe(Material fuel, Material input, List<Material> allowedBase)
+        private Recipe(Material fuel, Material input, List<Material> allowedBase, int railNumber)
         {
             _fuel = fuel;
             _input = input;
             _allowedBases = allowedBase;
+            _railNumber = railNumber;
         }
     }
 }

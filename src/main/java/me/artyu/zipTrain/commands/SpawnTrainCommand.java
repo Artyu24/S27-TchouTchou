@@ -5,6 +5,7 @@ import me.artyu.zipTrain.manager.TrainManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,21 +47,6 @@ public class SpawnTrainCommand  implements CommandExecutor
             return true;
         }
 
-        double x, y, z;
-
-        try
-        {
-            x = Double.parseDouble(args[1]);
-            y = Double.parseDouble(args[2]);
-            z = Double.parseDouble(args[3]);
-        }
-        catch (NumberFormatException e)
-        {
-            sender.sendMessage("Coordinates must be numbers.");
-            getLogger().info("Coordinates must be numbers.");
-            return true;
-        }
-
         if(!args[4].equalsIgnoreCase("n") && !args[4].equalsIgnoreCase("s") && !args[4].equalsIgnoreCase("w") && !args[4].equalsIgnoreCase("e"))
         {
             getLogger().info(args[4]);
@@ -83,7 +69,24 @@ public class SpawnTrainCommand  implements CommandExecutor
         if (existingTrain != null)
             trainManager.destroyTrain(team);
 
-        Location base = new Location(world, x, y, z);
+        Location origin;
+
+        if (sender instanceof BlockCommandSender)
+        {
+            BlockCommandSender blockSender = (BlockCommandSender) sender;
+            origin = blockSender.getBlock().getLocation();
+        }
+        else if (sender instanceof Player)
+        {
+            origin = ((Player) sender).getLocation();
+        }
+        else
+        {
+            sender.sendMessage("This command must be executed by a player or a command block.");
+            return true;
+        }
+
+        Location base = parseRelative(origin, args[1], args[2], args[3]);
 
         double xAdd = 0;
         double zAdd = 0;
@@ -143,6 +146,23 @@ public class SpawnTrainCommand  implements CommandExecutor
 
         return true;
     }
+
+    public Location parseRelative(Location base, String xs, String ys, String zs) {
+        double x = xs.startsWith("~")
+                ? base.getX() + (xs.length() > 1 ? Double.parseDouble(xs.substring(1)) : 0)
+                : Double.parseDouble(xs);
+
+        double y = ys.startsWith("~")
+                ? base.getY() + (ys.length() > 1 ? Double.parseDouble(ys.substring(1)) : 0)
+                : Double.parseDouble(ys);
+
+        double z = zs.startsWith("~")
+                ? base.getZ() + (zs.length() > 1 ? Double.parseDouble(zs.substring(1)) : 0)
+                : Double.parseDouble(zs);
+
+        return new Location(base.getWorld(), x, y, z);
+    }
+
 
     private void setupMinecart(Minecart minecart, int cmd)
     {
