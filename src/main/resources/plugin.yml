@@ -6,8 +6,10 @@ authors: [ Artyu ]
 commands:
   tchoutchou_lockteam:
     description: Lock a team
+    usage: /tchoutchou_lockteam <team>
   tchoutchou_unlockteam:
     description: Unlock a team
+    usage: /tchoutchou_unlockteam <team>
   tchoutchou_spawntrain:
     description: Spawn a non-collidable minecart train
     usage: /spawntrain <pseudo> <x> <y> <z> <n/s/e/w>

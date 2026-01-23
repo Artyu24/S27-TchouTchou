@@ -116,10 +116,6 @@ public class SpawnTrainCommand  implements CommandExecutor
         Location cartLoc = base.clone().add(xAdd, 0, zAdd);
         Location chestLoc = base.clone().add(xAdd * 2, 0, zAdd * 2);
 
-        player.sendMessage(locoLoc.toString());
-        player.sendMessage(cartLoc.toString());
-        player.sendMessage(chestLoc.toString());
-
         PoweredMinecart furnace = world.spawn(locoLoc, PoweredMinecart.class);
         Minecart cart = world.spawn(cartLoc, Minecart.class);
         StorageMinecart chest = world.spawn(chestLoc, StorageMinecart.class);

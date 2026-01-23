@@ -33,10 +33,10 @@ public class TeamTabCompleter implements TabCompleter
                 {
                     boolean locked = LockManager.isTeamLocked(name);
 
-                    if (commandName.equals("lockteam"))
+                    if (commandName.equals("tchoutchou_lockteam"))
                         return !locked;
 
-                    if (commandName.equals("unlockteam"))
+                    if (commandName.equals("tchoutchou_unlockteam"))
                         return locked;
 
                     return false;

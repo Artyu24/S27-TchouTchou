@@ -251,7 +251,7 @@ public class TeamFurnaceManager
         }
 
         List<ItemStack> drops = new ArrayList<>();
-        
+
         // 1) Input
         ItemStack input = inv.getSmelting();
         if (input != null && !input.getType().isAir())

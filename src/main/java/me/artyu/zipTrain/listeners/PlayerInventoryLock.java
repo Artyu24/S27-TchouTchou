@@ -4,8 +4,12 @@ import me.artyu.zipTrain.manager.LockManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -27,6 +31,17 @@ public class PlayerInventoryLock implements Listener
 
         if (!LockManager.isLocked(player))
             return;
+
+        if (event.getClick() == ClickType.NUMBER_KEY) {
+
+            int hotbarIndex = event.getHotbarButton();
+
+            if (hotbarIndex != 0) {
+                event.setCancelled(true);
+                player.updateInventory();
+                return;
+            }
+        }
 
         if (event.getSlot() == 40)
         {
@@ -105,6 +120,21 @@ public class PlayerInventoryLock implements Listener
         if (event.getItemInHand().getType() == Material.BARRIER)
         {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+
+        if (!LockManager.isLocked(player))
+            return;
+
+        Material broken = event.getBlock().getType();
+        if (broken == Material.RAIL) {
+            event.setDropItems(false);
+            event.getBlock().getDrops().clear();
+            return;
         }
     }
 
