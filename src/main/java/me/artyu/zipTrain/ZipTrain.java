@@ -3,6 +3,7 @@ package me.artyu.zipTrain;
 import me.artyu.zipTrain.commands.LockCommand;
 import me.artyu.zipTrain.commands.SpawnTrainCommand;
 import me.artyu.zipTrain.commands.UnlockCommand;
+import me.artyu.zipTrain.data.train.TrainModels;
 import me.artyu.zipTrain.listeners.MinecartBehaviour;
 import me.artyu.zipTrain.listeners.PlayerInventoryLock;
 import me.artyu.zipTrain.listeners.TeamMinecartInteract;
@@ -21,6 +22,7 @@ public final class ZipTrain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerInventoryLock(), this);
         TeamFurnaceManager.init(this);
         getServer().getPluginManager().registerEvents(new TeamMinecartInteract(), this);
+        TrainModels.init(this);
 
         getCommand("tchoutchou_lockteam").setExecutor(new LockCommand());
         getCommand("tchoutchou_unlockteam").setExecutor(new UnlockCommand());

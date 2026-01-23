@@ -1,6 +1,7 @@
 package me.artyu.zipTrain.data.train;
 
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.data.Rail;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.EntityType;
@@ -187,23 +188,22 @@ public class VisualWagon
         };
     }
 
-    public void setCustomModelData(int customModelData)
+    public void setItemModel(NamespacedKey modelKey)
     {
         ItemStack current = display.getItemStack();
         if (current == null)
             return;
 
-        ItemStack updated = current.clone();
-        ItemMeta meta = updated.getItemMeta();
+        ItemMeta meta = current.getItemMeta();
         if (meta == null)
             return;
 
-        Integer existing = meta.hasCustomModelData() ? meta.getCustomModelData() : null;
-        if (existing != null && existing == customModelData)
+        NamespacedKey existing = meta.getItemModel();
+        if (modelKey.equals(existing))
             return;
 
-        meta.setCustomModelData(customModelData);
-        updated.setItemMeta(meta);
-        display.setItemStack(updated);
+        meta.setItemModel(modelKey);
+        current.setItemMeta(meta);
+        display.setItemStack(current);
     }
 }
