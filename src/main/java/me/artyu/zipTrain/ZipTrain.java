@@ -22,7 +22,6 @@ public final class ZipTrain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerInventoryLock(), this);
         TeamFurnaceManager.init(this);
         getServer().getPluginManager().registerEvents(new TeamMinecartInteract(), this);
-        TrainModels.init(this);
 
         getCommand("tchoutchou_lockteam").setExecutor(new LockCommand());
         getCommand("tchoutchou_unlockteam").setExecutor(new UnlockCommand());

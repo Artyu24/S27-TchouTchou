@@ -36,7 +36,7 @@ public class TeamFurnaceManager
     private static final List<Recipe> RECIPES = List.of(
             new Recipe(Material.OAK_WOOD, Material.ANDESITE, List.of(Material.GRASS_BLOCK, Material.ANDESITE, Material.OAK_WOOD, Material.LIME_CONCRETE), 2),
             new Recipe(Material.SPRUCE_WOOD, Material.CALCITE, List.of(Material.SNOW_BLOCK, Material.WHITE_CONCRETE_POWDER, Material.SPRUCE_WOOD, Material.CALCITE, Material.WHITE_WOOL, Material.STRIPPED_PALE_OAK_WOOD, Material.LIGHT_BLUE_CONCRETE), 4),
-            new Recipe(Material.STRIPPED_MANGROVE_WOOD, Material.BLACKSTONE, List.of(Material.CRIMSON_NYLIUM, Material.BLACKSTONE, Material.NETHER_BRICKS, Material.RED_CONCRETE, Material.RED_STAINED_GLASS, Material.ORANGE_STAINED_GLASS, Material.YELLOW_STAINED_GLASS), 4)
+            new Recipe(Material.STRIPPED_MANGROVE_WOOD, Material.BLACKSTONE, List.of(Material.CRIMSON_NYLIUM, Material.BLACKSTONE, Material.NETHER_BRICKS, Material.RED_CONCRETE), 4)
     );
 
     private static BukkitTask _task;

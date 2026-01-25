@@ -219,9 +219,7 @@ public class Train
         if (hasRails != wagonRailsVariant)
         {
             wagonRailsVariant = hasRails;
-
-
-            wagonVisual.setItemModel(TrainModels.model(hasRails ? "craftwagonfull" : "craftwagonempty"));
+            wagonVisual.setItemModel(TrainModels.model(hasRails ? "craft_wagon_full" : "craft_wagon_empty"));
         }
 
         for (VisualWagon visual : visuals)
@@ -296,7 +294,7 @@ public class Train
         isLow = false;
         speed = highSpeed;
 
-        locomotiveVisual.setItemModel(TrainModels.model("locomotivefast"));
+        locomotiveVisual.setItemModel(TrainModels.model("locomotive_fast"));
 
         modifySpeed(initialDirection);
     }
@@ -309,7 +307,7 @@ public class Train
         isLow = true;
         speed = lowSpeed;
 
-        locomotiveVisual.setItemModel(TrainModels.model("locomotiveslow"));
+        locomotiveVisual.setItemModel(TrainModels.model("locomotive_slow"));
 
         modifySpeed(initialDirection);
     }

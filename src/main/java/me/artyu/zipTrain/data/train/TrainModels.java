@@ -8,26 +8,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class TrainModels
 {
-    private static JavaPlugin plugin;
-
-    public static void init(JavaPlugin pluginInstance)
-    {
-        plugin = pluginInstance;
-    }
+    private static final String NAMESPACE = "survisland";
 
     public static ItemStack locomotive()
     {
-        return create("locomotiveslow");
+        return create("locomotive_slow");
     }
 
     public static ItemStack wagon()
     {
-        return create("craftwagonempty");
+        return create("craft_wagon_empty");
     }
 
     public static ItemStack chest()
     {
-        return create("chestwagon");
+        return create("chest_wagon");
     }
 
     private static ItemStack create(String itemModelId)
@@ -35,7 +30,7 @@ public class TrainModels
         ItemStack item = new ItemStack(Material.CARROT_ON_A_STICK);
         ItemMeta meta = item.getItemMeta();
 
-        meta.setItemModel(new NamespacedKey(plugin, itemModelId));
+        meta.setItemModel(new NamespacedKey(NAMESPACE, itemModelId));
         item.setItemMeta(meta);
 
         return item;
@@ -43,6 +38,6 @@ public class TrainModels
 
     public static NamespacedKey model(String id)
     {
-        return new NamespacedKey(plugin, id);
+        return new NamespacedKey(NAMESPACE, id);
     }
 }
